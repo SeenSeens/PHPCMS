@@ -63,11 +63,12 @@
 			</div> <!-- Ending of Side area --> 
 
 			<div>
-				<?php echo Message();
-				echo SuccessMessage(); ?>
+				
 			</div>
 			<div class="col-sm-10"> <!-- Main Area -->
 				<h1>Admin Dashboard</h1>
+				<?php echo Message();
+				echo SuccessMessage(); ?>
 				<div class="table-responsive">
 					<table class="table table-striped table-hover">
 						<tr>
