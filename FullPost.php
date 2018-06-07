@@ -22,6 +22,11 @@
 		nav ul li {
 			float: left;
 		}
+		.FieldInfo {
+			color: rgb(251, 174, 44);
+			font-family: Bitter, Georgia, "Times New Roman", Times, serif;
+			font-size: 1.2em;
+		}
 	</style>
 </head>
 <body>
@@ -90,7 +95,7 @@
 						<div class="caption">
 							<h1 id="heading"><?php echo htmlentities($Title); ?></h1>
 							<p class="description">Category: <?php echo htmlentities($Category); ?> Published on <?php echo htmlentities($DateTime); ?>
-								<?php/*
+								<?php
 								global $Connection;
 								$QueryApproved = "SELECT COUNT(*) FROM comments WHERE admin_panel_id = '$PostId' AND status = 'ON'";
 								$ExecuteApproved = mysqli_query($Connection, $QueryApproved);
@@ -99,8 +104,8 @@
 								if ($TotalApproved > 0) {
 									?>
 									<span class="badge pull-right">Comments: <?php echo $TotalApproved; ?></span>
-									<?php*/
-								//}
+									<?php
+								}
 								?>
 							</p>
 							<p class="post">
@@ -114,10 +119,36 @@
 					<?php
 					}
 				?>
+				<span class="FieldInfo">Share your thoughts about this post</span>
+				<span class="FieldInfo">Comments</span>
+				<div>
+					<form action="AddNewPost.php" method="post" enctype="multipart/form-data">
+						<fieldset>
+							<div class="form-group">
+								<label for="Name"><span class="FieldInfo">Name:</span></label>
+								<input class="form-control" type="text" name="Name" id="Name" placeholder="Name">
+							</div>
+
+							<div class="form-group">
+								<label for="Email"><span class="FieldInfo">Email:</span></label>
+								<input class="form-control" type="Email" name="Email" id="Email" placeholder="Email">
+							</div>
+
+							<div class="form-group">
+								<label for="commentarea"><span class="FieldInfo">Comment:</span></label>
+								<textarea class="form-control" name="Comment" id="commentarea">
+									
+								</textarea>
+							</div>
+							 <br>
+							<input class="btn btn-primary" type="submit" name="Submit" value="Submit">
+						</fieldset>  <br>
+					</form>
+				</div>
 				<nav>
 					<ul class="pagination pull-left pagination-lg">
 						<?php
-						/*if (isset($Page)) {
+						if (isset($Page)) {
 							if ($Page > 1) { ?>
 								<li><a href="Blog.php?Page=<?php echo $Page-1; ?>">&laquo;</a></li>
 								<?php
@@ -153,7 +184,8 @@
 									<?php
 								}
 							}
-							*/?>
+						}
+							?>
 						</ul>
 					</nav>
 				</div> <!--Main Blog Area Ending-->
@@ -174,7 +206,7 @@
 					</div>
 					<div class="panel-body">
 						<?php
-						/*global $Connection;
+						global $Connection;
 						$ViewQuery = "SELECT * FROM category ORDER BY id desc";
 						$Execute = mysqli_query($Connection, $ViewQuery);
 						while ($DataRows = mysqli_fetch_array($Execute)) {
@@ -185,7 +217,7 @@
 								<span id="heading"><?php echo $Category."<br>"; ?></span>
 							</a>
 							<?php
-						}*/
+						}
 						?>
 					</div>
 					<div class="panel-footer"></div>
@@ -195,7 +227,7 @@
 						<h2 class="panel-title">Recent Posts</h2>
 					</div>
 					<div class="panel-body background">
-						<?php/*
+						<?php
 						global $Connection;
 						$ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc LIMIT 0,5";
 						$Execute = mysqli_query($Connection, $ViewQuery);
@@ -206,7 +238,7 @@
 						    $Image = $DataRows['image'];
 						    if (strlen($DateTime) > 11) {
 						    	$DateTime = substr($DateTime, 0, 12);
-						    }*/
+						    }
 						    ?>
 						    <div>
 						    	<img class="pull-left" style="margin-top: 10px; margin-left: 0px;" width="120" height="60" src="Upload/<?php echo htmlentities($Image); ?>">
@@ -216,7 +248,7 @@
 						    	<p class="description" style="margin-top: 130px;"><?php echo htmlentities($DateTime); ?></p> <hr>
 						    </div>
 						    <?php
-						//}
+						}
 						?>
 					</div>
 					<div class="panel-footer"></div>
