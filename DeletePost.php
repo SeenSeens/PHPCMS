@@ -182,7 +182,7 @@ if (isset($_POST["Submit"])) {
 					</form>
 				</div>
 					
-			</div> <!-- Ending of Main Area <--</-->
+			</div> <!-- Ending of Main Area -->
 		</div> <!-- Ending of Row-->
 	</div> <!-- Ending of Container -->
 
