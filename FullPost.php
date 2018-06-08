@@ -1,7 +1,36 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Session.php"); ?>	
 <?php require_once("Include/Functions.php"); ?>
-
+<?php
+if (isset($_POST["Submit"])) {
+	$Name = mysqli_real_escape_string($Connection, $_POST["Name"]); // mysqli_real_escape_string(): sql injection
+	$Email = mysqli_real_escape_string($Connection, $_POST["Email"]);
+	$Comment = mysqli_real_escape_string($Connection, $_POST["Comment"]);
+	date_default_timezone_set("Asia/Ho_Chi_Minh");
+	$CurrentTime = time();
+	$DateTime = strftime("%Y-%m-%d	%H:%M:%S", $CurrentTime);
+	$PostId = $_GET['id'];
+	$DateTime;
+	if (empty($Name) || empty($Email) || empty($Comment)) {
+		$_SESSION["ErrorMessage"] = "All Fields are required";
+	} elseif (strlen($Comment) > 500) {
+		$_SESSION["ErrorMessage"] = "Only 500  Characters are Allowed in Comment";
+	} else {
+		//require_once 'Include/DB.php';
+		global $Connection;
+		$PostIDFromURL = $_GET['id'];
+		$Query = "INSERT INTO comments (datetime, name, email, comment, appprovedby, status, admin_panel_id) VALUES ('$DateTime', '$Name', '$Email', '$Comment', 'Pending', 'OFF', '$PostIDFromURL')";
+		$Execute = mysqli_query($Connection, $Query);
+		if ($Execute) {
+			$_SESSION["SuccessMessage"] = "Comment Submitted Successfully";
+			Redirect_to("FullPost.php?id=<?php echo $PostId; ?>");
+		} else {
+			$_SESSION["ErrorMessage"] = "Something Went Wrong. Try Again !";
+			Redirect_to("FullPost.php?id=<?php echo $PostId; ?>");
+		}
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,6 +100,10 @@
 		<div class="row"> <!-- Row -->
 			<div class="col-sm-8"> <!-- Main Blog Area -->
 				<?php
+					echo Message();
+					echo SuccessMessage();
+				 ?>
+				<?php
 				global $Connection;
 				// Query when Search Button is Active
 				if (isset($_GET['SearchButton'])) {
@@ -122,7 +155,7 @@
 				<span class="FieldInfo">Share your thoughts about this post</span>
 				<span class="FieldInfo">Comments</span>
 				<div>
-					<form action="AddNewPost.php" method="post" enctype="multipart/form-data">
+					<form action="FullPost.php?id=<?php echo $PostId; ?>" method="post" enctype="multipart/form-data">
 						<fieldset>
 							<div class="form-group">
 								<label for="Name"><span class="FieldInfo">Name:</span></label>
