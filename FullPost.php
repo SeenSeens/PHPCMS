@@ -176,8 +176,8 @@ if (isset($_POST["Submit"])) {
 
 				<?php
 				global $Connection;
-				$PostIdFromComment = $_GET['id'];
-				$ExtractingCommentQuery = "SELECT * FROM comments WHERE admin_panel_id = '$PostIdFromComment'";
+				$PostIdFromComments = $_GET['id'];
+				$ExtractingCommentQuery = "SELECT * FROM comments WHERE admin_panel_id = '$PostIdFromComments' AND status = 'ON'";
 				$Execute = mysqli_query($Connection, $ExtractingCommentQuery);
 				while ($DataRows = mysqli_fetch_array($Execute)) {
 				    $CommentDate = $DataRows['datetime'];
