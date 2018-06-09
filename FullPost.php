@@ -12,9 +12,9 @@ if (isset($_POST["Submit"])) {
 	$PostId = $_GET['id'];
 	$DateTime;
 	if (empty($Name) || empty($Email) || empty($Comment)) {
-		$_SESSION["ErrorMessage"] = "All Fields are required";
+		$_SESSION["ErrorMessage"] = "All fields are required";
 	} elseif (strlen($Comment) > 500) {
-		$_SESSION["ErrorMessage"] = "Only 500  Characters are Allowed in Comment";
+		$_SESSION["ErrorMessage"] = "Only 500  characters are allowed in comment";
 	} else {
 		//require_once 'Include/DB.php';
 		global $Connection;
@@ -23,10 +23,10 @@ if (isset($_POST["Submit"])) {
 		$Execute = mysqli_query($Connection, $Query);
 		if ($Execute) {
 			$_SESSION["SuccessMessage"] = "Comment Submitted Successfully";
-			Redirect_to("FullPost.php?id=<?php echo $PostId; ?>");
+			Redirect_to("FullPost.php?id={$PostId}");
 		} else {
 			$_SESSION["ErrorMessage"] = "Something Went Wrong. Try Again !";
-			Redirect_to("FullPost.php?id=<?php echo $PostId; ?>");
+			Redirect_to("FullPost.php?id={$PostId}");
 		}
 	}
 }
@@ -43,10 +43,14 @@ if (isset($_POST["Submit"])) {
 	<link rel="stylesheet" href="css/publicstyles.css">
 	<style>
 		.col-sm-8 {
-			background-color: red;
+			/*
+			 * background-color: red;
+			 */
 		}
 		.col-sm-3 {
-			background-color: green;
+			/*
+			 * background-color: green;
+			 */
 		}
 		nav ul li {
 			float: left;
@@ -55,6 +59,21 @@ if (isset($_POST["Submit"])) {
 			color: rgb(251, 174, 44);
 			font-family: Bitter, Georgia, "Times New Roman", Times, serif;
 			font-size: 1.2em;
+		}
+		.CommentBlock {
+			background-color: #F6F7F9;
+		}
+		.Comment-Info {
+			color: #365899;
+			font-family: sans-serif;
+			font-size: 1.1em;
+			font-weight: bold;
+			padding-top: 10px;
+		}
+		.Comment {
+			margin-top: -2px;
+			padding-bottom: 10px;
+			font-size: 1.1em;
 		}
 	</style>
 </head>
@@ -152,8 +171,31 @@ if (isset($_POST["Submit"])) {
 					<?php
 					}
 				?>
-				<span class="FieldInfo">Share your thoughts about this post</span>
+				
 				<span class="FieldInfo">Comments</span>
+
+				<?php
+				global $Connection;
+				$PostIdFromComment = $_GET['id'];
+				$ExtractingCommentQuery = "SELECT * FROM comments WHERE admin_panel_id = '$PostIdFromComment'";
+				$Execute = mysqli_query($Connection, $ExtractingCommentQuery);
+				while ($DataRows = mysqli_fetch_array($Execute)) {
+				    $CommentDate = $DataRows['datetime'];
+				    $CommentName = $DataRows['name'];
+				    $Comments = $DataRows['comment'];
+				?>
+				<div class="CommentBlock">
+					<img style="margin-left: 10px; margin-top: 10px;" class="pull-left" src="images/comment.png" alt="" width="50px" height="50px">
+					<p style="margin-left: 90px" class="Comment-Info"><?php echo $CommentName ?></p>
+					<p style="margin-left: 90px" class="description"><?php echo $CommentDate; ?></p>
+					<p style="margin-left: 90px" class="Comment"><?php echo $Comments; ?></p>
+				</div> <br>
+				<?php
+				}
+				?>
+				<br>
+				<span class="FieldInfo">Share your thoughts about this post</span>
+
 				<div>
 					<form action="FullPost.php?id=<?php echo $PostId; ?>" method="post" enctype="multipart/form-data">
 						<fieldset>
