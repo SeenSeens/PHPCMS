@@ -19,7 +19,7 @@ if (isset($_POST["Submit"])) {
 	$Target = "Upload/".basename($_FILES["Image"]["name"]);
 	//$Admin = $_SESSION['Username'];
 		//require_once 'Include/DB.php';
-		global $Connection;
+		$Connection;
 		$DeleteFromURL = $_GET['Delete'];
 		$Query = "DELETE FROM admin_panel WHERE id = '$DeleteFromURL'";
 		$Execute = mysqli_query($Connection, $Query);

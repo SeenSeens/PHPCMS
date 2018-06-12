@@ -55,7 +55,7 @@ if (isset($_POST["Submit"])) {
 		}
 	</style>
 </head>
-<body><!--
+<body>
 	<div style="height: 10px; background: #27aae1;"></div>
 	<nav class="navbar navbar-inverse" role="navigation">
 		<div class="container">
@@ -91,7 +91,7 @@ if (isset($_POST["Submit"])) {
 		</div>
 	</nav>
 	<div class="Line" style="height: 10px; background: #27aae1;"></div>
-	-->
+	
 
 	<!-- Start Container -->
 	<div class="container-fluid">
@@ -156,7 +156,7 @@ if (isset($_POST["Submit"])) {
 							<td><?php echo $CategoryName; ?></td>
 							<td><?php echo $CreatorName; ?></td>
 							<td>
-								<a href="DeleteCategory.php?id=<?php echo $Id;?>">
+								<a href="DeleteCategories.php?delete=<?php echo $Id;?>">
 								<span class="btn btn-danger">Delete</span></a>
 							</td>
 						</tr>

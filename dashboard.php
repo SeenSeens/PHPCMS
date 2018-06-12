@@ -56,7 +56,21 @@
 					<li ><a href="AddNewPost.php"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Add New Post</a></li>
 					<li><a href="Categories.php"><span class="glyphicon glyphicon-tags"></span>&nbsp; Categories</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
-					<li><a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments</a></li>
+					<li>
+						<a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments
+							<?php
+							$Connection;
+							$QueryTotal = "SELECT COUNT(*) FROM comments WHERE status = 'OFF'";
+							$ExecuteTotal = mysqli_query($Connection, $QueryTotal);
+							$RowTotal  = mysqli_fetch_array($ExecuteTotal);
+							$Total  = array_shift($RowTotal);
+							if ($Total > 0) { ?>
+								<span class="label pull-left label-warning"><?php echo $Total; ?></span>
+								<?php
+							}
+							?>	
+						</a>
+					</li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
 					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
 				</ul>
@@ -116,7 +130,31 @@
 									echo $Category; ?>
 								</td>
 								<td><img src="Upload/<?php echo $Image; ?>" width="170px"; height="60px"></td>
-								<td>Processing</td>
+								<td>
+									<?php
+									$Connection;
+									$QueryApproved = "SELECT COUNT(*) FROM comments WHERE admin_panel_id = '$Id' AND status = 'ON'";
+									$ExecuteApproved = mysqli_query($Connection, $QueryApproved);
+									$RowApproved = mysqli_fetch_array($ExecuteApproved);
+									$TotalApproved = array_shift($RowApproved);
+									if ($TotalApproved > 0) { ?>
+										<span class="label pull-right label-success"><?php echo $TotalApproved; ?></span>
+										<?php
+									}
+									?>
+									
+									<?php
+									$Connection;
+									$QueryUnApproved = "SELECT COUNT(*) FROM comments WHERE admin_panel_id = '$Id' AND status = 'OFF'";
+									$ExecuteUnApproved  = mysqli_query($Connection, $QueryUnApproved);
+									$RowUnApproved  = mysqli_fetch_array($ExecuteUnApproved );
+									$TotalUnApproved  = array_shift($RowUnApproved);
+									if ($TotalUnApproved > 0) { ?>
+										<span class="label pull-left label-danger"><?php echo $TotalUnApproved; ?></span>
+										<?php
+									}
+									?>			
+								</td>
 								<td>
 									<a href="EditPost.php?Edit=<?php echo $Id; ?>"> <span class="btn btn-warning">Edit</span></a> 
 									<a href="DeletePost.php?Delete=<?php echo $Id; ?>"> <span class="btn btn-danger">Delete</span></a>

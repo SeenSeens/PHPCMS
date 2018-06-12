@@ -92,7 +92,7 @@
 							$PersonComment = $DataRows['comment'];
 							$CommentedPostId = $DataRows['admin_panel_id'];
 							$SrNo++;
-							if (strlen($PersonComment) > 18) {$PersonComment = substr($PersonComment, 0, 18).'...';}
+							//if (strlen($PersonComment) > 18) {$PersonComment = substr($PersonComment, 0, 18).'...';}
 							if (strlen($PersonName) > 10) {$PersonName = substr($PersonName, 0, 10).'...';}
 						?>
 						<tr>
@@ -137,7 +137,7 @@
 							$ApprovedBy = $DataRows['approvedby'];
 							$CommentedPostId = $DataRows['admin_panel_id'];
 							$SrNo++;
-							if (strlen($PersonComment) > 18) {$PersonComment = substr($PersonComment, 0, 18).'...';}
+							//if (strlen($PersonComment) > 18) {$PersonComment = substr($PersonComment, 0, 18).'...';}
 							if (strlen($PersonName) > 10) {$PersonName = substr($PersonName, 0, 10).'...';}
 						?>
 						<tr>
