@@ -101,7 +101,7 @@
 							<td><?php echo htmlentities($DateTimeOfComment); ?></td>
 							<td><?php echo htmlentities($PersonComment); ?></td>
 							<td><a href="ApproveComments.php?id=<?php echo $CommentId; ?>"><span class="btn btn-success">Approve</span></a></td>
-							<td><a href="#"><span class="btn btn-danger">Delete</span></a></td>
+							<td><a href="DeleteComments.php?id=<?php echo $CommentId ?>"><span class="btn btn-danger">Delete</span></a></td>
 							<td><a href="FullPost.php?id=<?php echo $CommentedPostId; ?>" target = "_blank"><span class="btn btn-primary">Details</span></a></td>
 						</tr>
 						<?php
@@ -118,12 +118,14 @@
 							<th>Name</th>
 							<th>Date</th>
 							<th>Comment</th>
-							<th>Approve</th>
+							<th>Approve By</th>
+							<th>Revert Approve</th>
 							<th>Delete Comment</th>
 							<th>Details</th>
 						</tr>
 						<?php
 						$Connection;
+						//$Admin = "TruongTuanIT";
 						$Query = "SELECT * FROM comments WHERE status = 'ON' ORDER BY datetime desc";
 						$Execute = mysqli_query($Connection, $Query);
 						$SrNo = 0;
@@ -132,6 +134,7 @@
 							$DateTimeOfComment = $DataRows['datetime'];
 							$PersonName = $DataRows['name'];
 							$PersonComment = $DataRows['comment'];
+							$ApprovedBy = $DataRows['approvedby'];
 							$CommentedPostId = $DataRows['admin_panel_id'];
 							$SrNo++;
 							if (strlen($PersonComment) > 18) {$PersonComment = substr($PersonComment, 0, 18).'...';}
@@ -142,8 +145,9 @@
 							<td style="color: #5e5eff;"><?php echo htmlentities($PersonName); ?></td>
 							<td><?php echo htmlentities($DateTimeOfComment); ?></td>
 							<td><?php echo htmlentities($PersonComment); ?></td>
-							<td><a href="#"><span class="btn btn-success">Approve</span></a></td>
-							<td><a href="#"><span class="btn btn-danger">Delete</span></a></td>
+							<td><?php echo htmlentities($ApprovedBy); ?></td>
+							<td><a href="DisApproveComments.php?id=<?php echo $CommentId; ?>"><span class="btn btn-warning">Dis-Approve</span></a></td>
+							<td><a href="DeleteComments.php?id=<?php echo $CommentId ?>"><span class="btn btn-danger">Delete</span></a></td>
 							<td><a href="FullPost.php?id=<?php echo $CommentedPostId; ?>" target = "_blank"><span class="btn btn-primary">Details</span></a></td>
 						</tr>
 						<?php
