@@ -99,10 +99,10 @@ if (isset($_POST["Submit"])) {
 		<div class="row">
 			<div class="col-sm-2"> <br>
 				<ul id="Side_Menu" class="nav nav-pills nav-stacked">
-					<li><a href="#"><span class="glyphicongly glyphicon-th"></span>&nbsp; DashBoard</a></li>
+					<li><a href="dashboard.php"><span class="glyphicongly glyphicon-th"></span>&nbsp; DashBoard</a></li>
 					<li><a href="AddNewPost.php"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Add New Post</a></li>
 					<li class="active"><a href="Categories.php"><span class="glyphicon glyphicon-tags"></span>&nbsp; Categories</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
+					<li><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
 					<li><a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
 					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
@@ -156,7 +156,7 @@ if (isset($_POST["Submit"])) {
 							<td><?php echo $CategoryName; ?></td>
 							<td><?php echo $CreatorName; ?></td>
 							<td>
-								<a href="DeleteCategories.php?delete=<?php echo $Id;?>">
+								<a href="DeleteCategories.php?id=<?php echo $Id;?>">
 								<span class="btn btn-danger">Delete</span></a>
 							</td>
 						</tr>

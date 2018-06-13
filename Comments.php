@@ -55,7 +55,7 @@
 					<li><a href="dashboard.php"><span class="glyphicongly glyphicon-th"></span>&nbsp; DashBoard</a></li>
 					<li><a href="AddNewPost.php"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Add New Post</a></li>
 					<li><a href="Categories.php"><span class="glyphicon glyphicon-tags"></span>&nbsp; Categories</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
+					<li><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
 					<li class="active"><a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
 					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
@@ -82,7 +82,7 @@
 						</tr>
 						<?php
 						$Connection;
-						$Query = "SELECT * FROM comments WHERE status = 'OFF' ORDER BY datetime desc";
+						$Query = "SELECT * FROM comments WHERE status = 'OFF' ORDER BY id desc";
 						$Execute = mysqli_query($Connection, $Query);
 						$SrNo = 0;
 						while ($DataRows = mysqli_fetch_array($Execute)) {
@@ -126,7 +126,7 @@
 						<?php
 						$Connection;
 						//$Admin = "TruongTuanIT";
-						$Query = "SELECT * FROM comments WHERE status = 'ON' ORDER BY datetime desc";
+						$Query = "SELECT * FROM comments WHERE status = 'ON' ORDER BY id desc";
 						$Execute = mysqli_query($Connection, $Query);
 						$SrNo = 0;
 						while ($DataRows = mysqli_fetch_array($Execute)) {

@@ -55,7 +55,7 @@
 					<li class="active"><a href="dashboard.php"><span class="glyphicongly glyphicon-th"></span>&nbsp; DashBoard</a></li>
 					<li ><a href="AddNewPost.php"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Add New Post</a></li>
 					<li><a href="Categories.php"><span class="glyphicon glyphicon-tags"></span>&nbsp; Categories</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
+					<li><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
 					<li>
 						<a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments
 							<?php

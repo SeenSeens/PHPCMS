@@ -5,9 +5,9 @@
 
 <?php
 if (isset($_POST["Submit"])) {
-	$Title = mysqli_real_escape_string($Connection, $_POST["Title"]); // mysqli_real_escape_string(): sql injection
-	$Category = mysqli_real_escape_string($Connection, $_POST["Category"]);
-	$Post = mysqli_real_escape_string($Connection, $_POST["Post"]);
+	$UserName = mysqli_real_escape_string($Connection, $_POST["UserName"]); // mysqli_real_escape_string(): sql injection
+	$Password = mysqli_real_escape_string($Connection, $_POST["Password"]);
+	$ConfirmPassword = mysqli_real_escape_string($Connection, $_POST["ConfirmPassword"]);
 	date_default_timezone_set("Asia/Ho_Chi_Minh");
 	$CurrentTime = time();
 	$DateTime = strftime("%Y-%m-%d	%H:%M:%S", $CurrentTime);
@@ -15,27 +15,27 @@ if (isset($_POST["Submit"])) {
 	$DateTime;
 
 	$Admin = "TruongTuanIT";
-	$Image = $_FILES["Image"]["name"];
-	$Target = "Upload/".basename($_FILES["Image"]["name"]);
 	//$Admin = $_SESSION['Username'];
-	if (empty($Title)) {
-		$_SESSION["ErrorMessage"] = "Title can't be empty";
-		Redirect_to("AddNewPost.php");
-	} elseif (strlen($Title) < 2) {
-		$_SESSION["ErrorMessage"] = "Title Should be at-least 2 Characters";
-		Redirect_to("AddNewPost.php");
+	if (empty($UserName) || empty($Password) || empty($ConfirmPassword)) {
+		$_SESSION["ErrorMessage"] = "All Fields must be filled out";
+		Redirect_to("Admins.php");
+	} elseif (strlen($Password) < 6 ) {
+		$_SESSION["ErrorMessage"] = "Atleast 6 Characters For Password are required";
+		Redirect_to("Admins.php");;
+	} elseif ($Password !== $ConfirmPassword) {
+		$_SESSION["ErrorMessage"] = "Password / ConfirmPassword does not match";
+		Redirect_to("Admins.php");
 	} else {
 		//require_once 'Include/DB.php';
 		global $Connection;
-		$Query = "INSERT INTO admin_panel(datetime, title, category, author, image, post) VALUES ('$DateTime', '$Title', '$Category', '$Admin', '$Image', '$Post')";
+		$Query = "INSERT INTO registration (datetime, username, password, addedby) VALUES ('$DateTime', '$UserName', '$Password', '$Admin')";
 		$Execute = mysqli_query($Connection, $Query);
-		move_uploaded_file($_FILES["Image"]["tmp_name"], $Target); // Chuyen hinh anh sang thu muc
 		if ($Execute) {
-			$_SESSION["SuccessMessage"] = "Post Added Successfully";
-			Redirect_to("AddNewPost.php");
+			$_SESSION["SuccessMessage"] = "Admin Added Successfully";
+			Redirect_to("Admins.php");
 		} else {
-			$_SESSION["ErrorMessage"] = "Something Went Wrong. Try Again !";
-			Redirect_to("AddNewPost.php");
+			$_SESSION["ErrorMessage"] = "Admin faild to add";
+			Redirect_to("Admins.php");
 		}
 	}
 }
@@ -47,7 +47,7 @@ if (isset($_POST["Submit"])) {
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Add New Post</title>
+	<title>Manage Admins</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -105,9 +105,9 @@ if (isset($_POST["Submit"])) {
 			<div class="col-sm-2"> <br>
 				<ul id="Side_Menu" class="nav nav-pills nav-stacked">
 					<li><a href="dashboard.php"><span class="glyphicongly glyphicon-th"></span>&nbsp; DashBoard</a></li>
-					<li class="active"><a href="AddNewPost.php"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Add New Post</a></li>
+					<li><a href="AddNewPost.php"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Add New Post</a></li>
 					<li><a href="Categories.php"><span class="glyphicon glyphicon-tags"></span>&nbsp; Categories</a></li>
-					<li><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
+					<li class="active"><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
 					<li><a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
 					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
@@ -115,58 +115,69 @@ if (isset($_POST["Submit"])) {
 			</div> <!-- Ending of Side area --> 
 
 			<div class="col-sm-10">
-				<h1>Add New Post</h1>
+				<h1>Manage Admin Access</h1>
 				<?php
-					//require_once 'Include/Session.php';
 					echo Message();
 					echo SuccessMessage();
 				 ?>
 
 				<div>
-					<form action="AddNewPost.php" method="post" enctype="multipart/form-data">
+					<form action="Admins.php" method="post">
 						<fieldset>
 							<div class="form-group">
-								<label for="title"><span class="FieldInfo">Title:</span></label>
-								<input class="form-control" type="text" name="Title" id="title" placeholder="Title">
+								<label for="UserName"><span class="FieldInfo">UserName:</span></label>
+								<input class="form-control" type="text" name="UserName" id="UserName" placeholder="UserName">
 							</div>
-
 							<div class="form-group">
-								<label for="categoryselect"><span class="FieldInfo">Category:</span></label>
-								<select class="form-control" name="Category" id="categoryselect">
-									<?php
-									// require_once 'Include/DB.php';
-									global $Connection;
-									$ViewQuery = "SELECT * FROM category ORDER BY datetime desc";
-									$Execute = mysqli_query($Connection, $ViewQuery);
-									while ($DataRows = mysqli_fetch_array($Execute)) {
-									    $Id = $DataRows["id"];
-									    $CategoryName = $DataRows["name"];
-										?>
-										<option value=""><?php echo $CategoryName; ?></option>
-										<?php
-									}
-									?>
-
-								</select>
+								<label for="Password"><span class="FieldInfo">Password:</span></label>
+								<input class="form-control" type="Password" name="Password" id="Password" placeholder="Password">
 							</div>
-
 							<div class="form-group">
-								<label for="imageselect"><span class="FieldInfo">Select Image:</span></label>
-								<input type="File" class="form-control" name="Image" id="imageselect">
+								<label for="ConfirmPassword"><span class="FieldInfo">Confirm Password:</span></label>
+								<input class="form-control" type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Retype same Password">
 							</div>
-
-							<div class="form-group">
-								<label for="postarea"><span class="FieldInfo">Post:</span></label>
-								<textarea class="form-control" name="Post" id="postarea">
-									
-								</textarea>
-							</div>
-							 <br>
-							<input class="btn btn-success btn-block" type="submit" name="Submit" value="Add New Post">
-						</fieldset>  <br>
+							<input class="btn btn-success btn-block" type="submit" name="Submit" value="Add New Admin">
+						</fieldset> <br> 
 					</form>
 				</div>
-					
+			<div class="table-responsive">
+				<table class="table table-striped table-hover">
+					<tr>
+						<th>Sr No.</th>
+						<th>Date & Time</th>
+						<th>Admin Name</th>	
+						<th>Added By</th>
+						<th>Action</th>
+					</tr>
+
+					<?php
+					// require_once 'Include/DB.php';
+					global $Connection;
+					$ViewQuery = "SELECT * FROM registration ORDER BY id desc";
+					$Execute = mysqli_query($Connection, $ViewQuery);
+					$SrNo = 0;
+					while ($DataRows = mysqli_fetch_array($Execute)) {
+					    $Id = $DataRows["id"];
+					    $DateTime = $DataRows["datetime"];
+					    $Username = $DataRows["username"];
+					    $Admin = $DataRows["addedby"];
+					    $SrNo++;
+						?>
+						<tr>
+							<td><?php echo $SrNo; ?></td>
+							<td><?php echo $DateTime; ?></td>
+							<td><?php echo $Username; ?></td>
+							<td><?php echo $Admin; ?></td>
+							<td>
+								<a href="DeleteAdmin.php?id=<?php echo $Id;?>">
+								<span class="btn btn-danger">Delete</span></a>
+							</td>
+						</tr>
+						<?php
+					}
+					?>
+				</table>
+			</div>
 			</div> <!-- Ending of Main Area -->
 		</div> <!-- Ending of Row-->
 	</div> <!-- Ending of Container -->

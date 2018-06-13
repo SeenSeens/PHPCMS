@@ -53,7 +53,7 @@ if (isset($_POST["Submit"])) {
 		}
 	</style>
 </head>
-<body><!--
+<body>
 	<div style="height: 10px; background: #27aae1;"></div>
 	<nav class="navbar navbar-inverse" role="navigation">
 		<div class="container">
@@ -89,7 +89,7 @@ if (isset($_POST["Submit"])) {
 		</div>
 	</nav>
 	<div class="Line" style="height: 10px; background: #27aae1;"></div>
-	-->
+	
 
 	<!-- Start Container -->
 	<div class="container-fluid">
