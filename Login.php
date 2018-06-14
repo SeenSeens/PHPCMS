@@ -5,9 +5,9 @@
 
 <?php
 if (isset($_POST["Submit"])) {
-	$UserName = mysqli_real_escape_string($Connection, $_POST["UserName"]); // mysqli_real_escape_string(): sql injection
+	$Username = mysqli_real_escape_string($Connection, $_POST["Username"]); // mysqli_real_escape_string(): sql injection
 	$Password = mysqli_real_escape_string($Connection, $_POST["Password"]);
-	if (empty($UserName) || empty($Password)) {
+	if (empty($Username) || empty($Password)) {
 		$_SESSION["ErrorMessage"] = "All Fields must be filled out";
 		Redirect_to("Login.php");
 	} else {
@@ -95,7 +95,7 @@ if (isset($_POST["Submit"])) {
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-envelope text-info"></span>
 									</span>
-									<input class="form-control" type="text" name="UserName" id="UserName" placeholder="UserName">
+									<input class="form-control" type="text" name="Username" id="Username" placeholder="Username">
 								</div>
 							</div>
 							<div class="form-group">

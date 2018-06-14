@@ -1,6 +1,7 @@
 <?php require_once ("Include/Session.php"); ?>
 <?php require_once ("Include/Functions.php"); ?>
 <?php require_once("Include/DB.php"); ?>
+<?php //Confirm_Login(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +73,7 @@
 						</a>
 					</li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
-					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
+					<li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
 				</ul>
 			</div> <!-- Ending of Side area --> 
 
