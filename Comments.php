@@ -59,7 +59,7 @@
 					<li><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
 					<li class="active"><a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
-					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
+					<li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
 				</ul>
 			</div> <!-- Ending of Side area --> 
 
@@ -83,7 +83,7 @@
 						</tr>
 						<?php
 						$Connection;
-						$Query = "SELECT * FROM comments WHERE status = 'OFF' ORDER BY id desc";
+						$Query = "SELECT * FROM comments WHERE status = 'OFF' ORDER BY id DESC";
 						$Execute = mysqli_query($Connection, $Query);
 						$SrNo = 0;
 						while ($DataRows = mysqli_fetch_array($Execute)) {
@@ -91,6 +91,7 @@
 							$DateTimeOfComment = $DataRows['datetime'];
 							$PersonName = $DataRows['name'];
 							$PersonComment = $DataRows['comment'];
+							//$ApprovedBy = $DataRows['approvedby'];
 							$CommentedPostId = $DataRows['admin_panel_id'];
 							$SrNo++;
 							//if (strlen($PersonComment) > 18) {$PersonComment = substr($PersonComment, 0, 18).'...';}
@@ -127,7 +128,7 @@
 						<?php
 						$Connection;
 						//$Admin = "TruongTuanIT";
-						$Query = "SELECT * FROM comments WHERE status = 'ON' ORDER BY id desc";
+						$Query = "SELECT * FROM comments WHERE status = 'ON' ORDER BY id DESC";
 						$Execute = mysqli_query($Connection, $Query);
 						$SrNo = 0;
 						while ($DataRows = mysqli_fetch_array($Execute)) {
@@ -149,7 +150,7 @@
 							<td><?php echo htmlentities($ApprovedBy); ?></td>
 							<td><a href="DisApproveComments.php?id=<?php echo $CommentId; ?>"><span class="btn btn-warning">Dis-Approve</span></a></td>
 							<td><a href="DeleteComments.php?id=<?php echo $CommentId ?>"><span class="btn btn-danger">Delete</span></a></td>
-							<td><a href="FullPost.php?id=<?php echo $CommentedPostId; ?>" target = "_blank"><span class="btn btn-primary">Details</span></a></td>
+							<td><a href="FullPost.php?id=<?php echo $CommentedPostId; ?>" target = "_blank"><span class="btn btn-primary">Live Preview</span></a></td>
 						</tr>
 						<?php
 						}

@@ -19,7 +19,7 @@ if (isset($_POST["Submit"])) {
 		//require_once 'Include/DB.php';
 		global $Connection;
 		$PostIDFromURL = $_GET['id'];
-		$Query = "INSERT INTO comments (datetime, name, email, comment, appprovedby, status, admin_panel_id) VALUES ('$DateTime', '$Name', '$Email', '$Comment', 'Pending', 'OFF', '$PostIDFromURL')";
+		$Query = "INSERT INTO comments (datetime, name, email, comment, approvedby, status, admin_panel_id) VALUES ('$DateTime', '$Name', '$Email', '$Comment', 'Pending', 'OFF', '$PostIDFromURL')";
 		$Execute = mysqli_query($Connection, $Query);
 		if ($Execute) {
 			$_SESSION["SuccessMessage"] = "Comment Submitted Successfully";
@@ -130,7 +130,7 @@ if (isset($_POST["Submit"])) {
 					$ViewQuery = "SELECT * FROM admin_panel WHERE datetime LIKE '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%Search%' OR post LIKE '%$Search%'";
 				} else {
 					$PostIDFromURL = $_GET['id'];
-					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc";
+					$ViewQuery = "SELECT * FROM admin_panel WHERE id = '$PostIDFromURL'";
 				}
 					$Execute = mysqli_query($Connection, $ViewQuery);
 					while ($DataRows = mysqli_fetch_array($Execute)) {
@@ -151,7 +151,7 @@ if (isset($_POST["Submit"])) {
 								global $Connection;
 								$QueryApproved = "SELECT COUNT(*) FROM comments WHERE admin_panel_id = '$PostId' AND status = 'ON'";
 								$ExecuteApproved = mysqli_query($Connection, $QueryApproved);
-								$RowsApproved = mysqli_fetch_array($Connection, $ExecuteApproved);
+								$RowsApproved = mysqli_fetch_array($ExecuteApproved);
 								$TotalApproved = array_shift($RowsApproved);
 								if ($TotalApproved > 0) {
 									?>
@@ -162,7 +162,7 @@ if (isset($_POST["Submit"])) {
 							</p>
 							<p class="post">
 								<?php
-								echo $Post;
+								echo nl2br($Post);
 								?>
 							</p>
 						</div>
@@ -188,7 +188,7 @@ if (isset($_POST["Submit"])) {
 					<img style="margin-left: 10px; margin-top: 10px;" class="pull-left" src="images/comment.png" alt="" width="50px" height="50px">
 					<p style="margin-left: 90px" class="Comment-Info"><?php echo $CommentName ?></p>
 					<p style="margin-left: 90px" class="description"><?php echo $CommentDate; ?></p>
-					<p style="margin-left: 90px" class="Comment"><?php echo $Comments; ?></p>
+					<p style="margin-left: 90px" class="Comment"><?php echo nl2br($Comments); ?></p>
 				</div> <br>
 				<?php
 				}

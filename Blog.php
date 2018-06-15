@@ -14,10 +14,15 @@
 	<link rel="stylesheet" href="css/publicstyles.css">
 	<style>
 		.col-sm-8 {
-			background-color: red;
+			/*
+			 * background-color: red;
+			 */
 		}
 		.col-sm-3 {
-			background-color: green;
+			/*
+			 *background-color: green;
+			 */
+			
 		}
 		nav ul li {
 			float: left;
@@ -71,23 +76,11 @@
 				if (isset($_GET['SearchButton'])) {
 					$Search = $_GET['Search'];
 					$ViewQuery = "SELECT * FROM admin_panel WHERE datetime LIKE '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%Search%' OR post LIKE '%$Search%'";
-				} else {
-					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc";
-				}
-					$Execute = mysqli_query($Connection, $ViewQuery);
-					while ($DataRows = mysqli_fetch_array($Execute)) {
-						$PostId = $DataRows["id"];
-						$DateTime = $DataRows["datetime"];
-						$Title = $DataRows["title"];
-						$Category = $DataRows["category"];
-						$Admin = $DataRows["author"];
-						$Image = $DataRows["image"];
-						$Post = $DataRows["post"];
-				//}
+				} 
 				// Query when Category is active URL Tab
-				/*elseif (isset($_GET['Category'])) {
+				elseif (isset($_GET['Category'])) {
 					$Category = $_GET['Category'];
-					$ViewQuery = "SELECT * FROM admin_panel WHERE category = '$Category' ORDER BY id desc";
+					$ViewQuery = "SELECT * FROM admin_panel WHERE category = '$Category' ORDER BY id DESC";
 				}
 				// Query when Pagination is Active i.e Blog?Page = 1
 				elseif (isset($_GET['Page'])) {
@@ -97,30 +90,38 @@
 					} else {
 						$ShowPostFrom = ($Page*3)-3;
 					}
-					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc LIMIT $ShowPostFrom, 3";
+					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id DESC LIMIT $ShowPostFrom, 3";
 				}
 				// The Default Query for Blog.php Page
 				else {
-					//global $Connection;
-					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc LIMIT 0,3";
-				*/
+					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id DESC LIMIT 0,3";
+				}
+					$Execute = mysqli_query($Connection, $ViewQuery);
+					while ($DataRows = mysqli_fetch_array($Execute)) {
+						$PostId = $DataRows["id"];
+						$DateTime = $DataRows["datetime"];
+						$Title = $DataRows["title"];
+						$Category = $DataRows["category"];
+						$Admin = $DataRows["author"];
+						$Image = $DataRows["image"];
+						$Post = $DataRows["post"];			
 					?>
 					<div class="blogpost thumbnail">
 						<img class="img-responsive img-rounded" src="Upload/<?php echo $Image; ?>">
 						<div class="caption">
 							<h1 id="heading"><?php echo htmlentities($Title); ?></h1>
 							<p class="description">Category: <?php echo htmlentities($Category); ?> Published on <?php echo htmlentities($DateTime); ?>
-								<?php/*
+								<?php
 								global $Connection;
 								$QueryApproved = "SELECT COUNT(*) FROM comments WHERE admin_panel_id = '$PostId' AND status = 'ON'";
 								$ExecuteApproved = mysqli_query($Connection, $QueryApproved);
-								$RowsApproved = mysqli_fetch_array($Connection, $ExecuteApproved);
+								$RowsApproved = mysqli_fetch_array($ExecuteApproved);
 								$TotalApproved = array_shift($RowsApproved);
 								if ($TotalApproved > 0) {
 									?>
 									<span class="badge pull-right">Comments: <?php echo $TotalApproved; ?></span>
-									<?php*/
-								//}
+									<?php
+								}
 								?>
 							</p>
 							<p class="post">
@@ -132,36 +133,38 @@
 								?>
 							</p>
 						</div>
-						<a href="FullPost.php?id=<?php echo $PostId; ?>"><span class="btn btn-info">Read More &rsaquo; &rsquo;</span></a>
+						<a href="FullPost.php?id=<?php echo $PostId; ?>"><span class="btn btn-info">Read More &rsaquo; &rsaquo;</span></a>
 					</div>
 					<?php
 					}
 				?>
 				<nav>
 					<ul class="pagination pull-left pagination-lg">
+						<!-- Creating backward Button -->
 						<?php
-						/*if (isset($Page)) {
+						if (isset($Page)) {
 							if ($Page > 1) { ?>
 								<li><a href="Blog.php?Page=<?php echo $Page-1; ?>">&laquo;</a></li>
 								<?php
 							}
-							?>
+						}
+						?>
 							<?php
 							global $Connection;
 							$QueryPagination = "SELECT COUNT(*) FROM admin_panel";
 							$ExecutePagination = mysqli_query($Connection, $QueryPagination);
 							$RowPagination = mysqli_fetch_array($ExecutePagination);
 							$TotalPosts = array_shift($RowPagination);
-							// echo
+							// echo $TotalPosts;
 							$PostPagination = $TotalPosts / 3;
 							$PostPagination = ceil($PostPagination);
-							// echo
+							// echo $PostPerPage;
 							for ($i = 1; $i <= $PostPagination; $i++){
 								if (isset($Page)) {
 									if ($i == $Page) { ?>
 										<li class="active"><a href="Blog.php?Page=<?php echo $i; ?>"><?php echo $i; ?></a></li> <?php
 									} else { ?>
-										<li><a href="Blog.php?Page=<?php echo $i; ?>"></a><?php echo $i; ?></li>
+										<li><a href="Blog.php?Page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
 										<?php
 									}
 								}
@@ -176,7 +179,7 @@
 									<?php
 								}
 							}
-							*/?>
+							?>
 						</ul>
 					</nav>
 				</div> <!--Main Blog Area Ending-->
@@ -197,8 +200,8 @@
 					</div>
 					<div class="panel-body">
 						<?php
-						/*global $Connection;
-						$ViewQuery = "SELECT * FROM category ORDER BY id desc";
+						global $Connection;
+						$ViewQuery = "SELECT * FROM category ORDER BY id DESC";
 						$Execute = mysqli_query($Connection, $ViewQuery);
 						while ($DataRows = mysqli_fetch_array($Execute)) {
 						    $Id = $DataRows['id'];
@@ -208,7 +211,7 @@
 								<span id="heading"><?php echo $Category."<br>"; ?></span>
 							</a>
 							<?php
-						}*/
+						}
 						?>
 					</div>
 					<div class="panel-footer"></div>
@@ -218,7 +221,7 @@
 						<h2 class="panel-title">Recent Posts</h2>
 					</div>
 					<div class="panel-body background">
-						<?php/*
+						<?php
 						global $Connection;
 						$ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc LIMIT 0,5";
 						$Execute = mysqli_query($Connection, $ViewQuery);
@@ -229,7 +232,7 @@
 						    $Image = $DataRows['image'];
 						    if (strlen($DateTime) > 11) {
 						    	$DateTime = substr($DateTime, 0, 12);
-						    }*/
+						    }
 						    ?>
 						    <div>
 						    	<img class="pull-left" style="margin-top: 10px; margin-left: 0px;" width="120" height="60" src="Upload/<?php echo htmlentities($Image); ?>">
@@ -239,7 +242,7 @@
 						    	<p class="description" style="margin-top: 130px;"><?php echo htmlentities($DateTime); ?></p> <hr>
 						    </div>
 						    <?php
-						//}
+						}
 						?>
 					</div>
 					<div class="panel-footer"></div>

@@ -11,9 +11,7 @@ if (isset($_POST["Submit"])) {
 	$DateTime = strftime("%Y-%m-%d	%H:%M:%S", $CurrentTime);
 	//$DateTime = strftime("%B-%d-%Y	%H:%M:%S", $CurrentTime);
 	$DateTime;
-
-	$Admin = "TruongTuanIT";
-	//$Admin = $_SESSION['Username'];
+	$Admin = $_SESSION["Username"];
 	if (empty($Category)) {
 		$_SESSION["ErrorMessage"] = "All Fields must be filled out";
 		Redirect_to("Categories.php");
@@ -105,7 +103,7 @@ if (isset($_POST["Submit"])) {
 					<li><a href="Admins.php"><span class="glyphicon glyphicon-user"></span>&nbsp; Manage Admins</a></li>
 					<li><a href="Comments.php"><span class="glyphicon glyphicon-comment"></span>&nbsp; Comments</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-equalizer"></span>&nbsp; Live Blog</a></li>
-					<li><a href=""><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
+					<li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
 				</ul>
 			</div> <!-- Ending of Side area --> 
 
