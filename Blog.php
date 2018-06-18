@@ -73,6 +73,9 @@
 				<?php
 				global $Connection;
 				// Query when Search Button is Active
+				/*
+				 * Chức năng tìm kiếm
+				 */
 				if (isset($_GET['SearchButton'])) {
 					$Search = $_GET['Search'];
 					$ViewQuery = "SELECT * FROM admin_panel WHERE datetime LIKE '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%Search%' OR post LIKE '%$Search%'";
@@ -82,6 +85,9 @@
 					$Category = $_GET['Category'];
 					$ViewQuery = "SELECT * FROM admin_panel WHERE category = '$Category' ORDER BY id DESC";
 				}
+				/*
+				 * Phân trang
+				 */
 				// Query when Pagination is Active i.e Blog?Page = 1
 				elseif (isset($_GET['Page'])) {
 					$Page = $_GET['Page'];
@@ -94,7 +100,7 @@
 				}
 				// The Default Query for Blog.php Page
 				else {
-					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id DESC LIMIT 0,3";
+					$ViewQuery = "SELECT * FROM admin_panel ORDER BY id DESC LIMIT 0,10"; // Giơi hạn 10 bài viết trên 1 trang
 				}
 					$Execute = mysqli_query($Connection, $ViewQuery);
 					while ($DataRows = mysqli_fetch_array($Execute)) {
@@ -185,7 +191,7 @@
 				</div> <!--Main Blog Area Ending-->
 			<div class="col-sm-offset-1 col-sm-3"> <!-- Side Area -->
 				<h2>About me</h2>
-				<img class="img-responsive img-circle" src="" alt="">
+				<img class="img-responsive img-circle imageicon" src="images/Bunny.jpg" alt="">
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit
 				, sed do eiusmod tempor incididunt ut labore et dolore magna
 				aliqua. Ut enim ad minim veniam, quis nostrud exercitation ul
@@ -194,6 +200,8 @@
 				um dolore eu fugiat nulla pariatur. Excepteur sint occaecat c
 				upidatat non proi
 				dent, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+				<!-- Danh mục -->
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h2 class="panel-title">Categories</h2>
@@ -216,6 +224,8 @@
 					</div>
 					<div class="panel-footer"></div>
 				</div>
+
+				<!-- Bài viết gần đây --> 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h2 class="panel-title">Recent Posts</h2>
